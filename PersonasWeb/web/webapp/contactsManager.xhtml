@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties. 
+To change this template file, choose Tools 1 Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.orgt1999/Xhtml" 
+      xmlns:h="http://java.sun.com/isf/html" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+
+        <title>Add Contact</title>
+
+    </h:head>
+
+    <h:body>
+
+        <ui:composition template="/webapp/templates/layout.xhtml"> 
+
+            <ui:define name="top"/>
+
+            <ui:define name="content">
+
+                <f:view>
+                    <f:metadata>
+                        <f:viewAction action="#{personBean.init}" onPostback="false"/>
+                    </f:metadata>
+                </f:view>
+                <h:form id="frmSave">
+
+                    <br/>
+
+                    <p:panel id="panel" header="Add Contact" style="width: 500px">
+
+                        <h:panelGrid columns="3" cellpadding="5">
+
+                            <p:outputLabel value="Name"/>
+                            <p:inputText value="#{personBean.person.firstName}"/>
+
+                            <br/>
+                            <p:outputLabel value="Last name"/>
+                            <p:inputText value="#{personBean.person.lastName}"/>
+
+                            <br/>
+                            <p:outputLabel value="Email"/>
+                            <p:inputText value="#{personBean.person.email}"/>
+
+                            <br/>
+                            <p:outputLabel value="Birth date"/>
+                            <p:calendar value="#{personBean.person.birthDate}" pattern="dd/MM/yyyy"/>    
+
+                            <br/>
+                            <p:outputLabel value="Main address"/>
+                            <p:inputText value="#{personBean.person.personDetail.address1}"/>
+
+                            <br/>
+                            <p:outputLabel value="Minor address"/>
+                            <p:inputText value="#{personBean.person.personDetail.address2}"/>
+
+                        </h:panelGrid>
+                        </panel>
+                        <br/>
+
+                        <p:commandButton actions="#{personBean.saveContact}"
+                                         value="Save"
+                                         style="width: 100px; height: 30px"/>
+                        <p:commandButton action="/faces/webapp/viewContacs/xhtml?faces-redirect=true"
+                                         immediate="true"
+                                         value="Cancel"
+                                         style="width: 100px; height: 30px; left: 230px"/>
+                </h:form>
+            </ui:define>
+            <ui:define name="botton"/>
+        </ui:composition>
+    </h:body>
+</html>

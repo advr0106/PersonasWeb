@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostfreSQLDialect</property>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://10.0.0.13:5432/dbcontactos</property>
+        <property name="hibernate.default_schema">dbcontactos</property>
+        <property name="hibernate.connection.usernamme">postgress</property>
+        <property name="hibernate.connection.password">postgress</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <mapping resource="model/resources/person.hbm.xml"/>
+        <mapping resource="model/resources/status.hbm.xml"/>
+        <mapping resource="model/resources/personDetail.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>

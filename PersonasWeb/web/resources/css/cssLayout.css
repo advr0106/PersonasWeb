@@ -1,0 +1,40 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 18, 2019, 2:10:48 PM
+    Author     : alex
+*/
+
+#divUserSession{
+    position:fixed;
+    right: 10px;
+    top: 15px;
+}
+
+#divUserSession > span{
+
+    color:white;
+
+}
+
+#top{
+    background-color: #036fab;
+    box-shadow: 0px 2px 2px rgba(0,0,0,0.7);
+    height: 105px;
+    left: 0px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 1000;
+}
+
+.center_content {
+    background-color: white;
+    box-shadow: 0px 0px 2px black;
+    margin-top: 110px;
+    padding: 5px;
+    position: relative;
+}

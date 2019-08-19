@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.orgt1999/Xhtml" 
+      xmlns:h="http://java.sun.com/isf/html" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>View Contacts</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/webapp/templates/layout.xhtml">
+            <ui:define name="top"/>
+            <ui:define name="content">
+                <f:view>
+                    <f:metadata>
+                        <f:viewAction action="#{personBean.init}" onPostback="false"/>
+                    </f:metadata>   
+                    <h:form id="frmContacts">
+                        <h2>View Contacs</h2>
+
+                        <br>
+                        <p:commandLink value="Export PDF"
+                                       ajax="false"
+                                       styleClass="clear-filters"
+                                       update="contactsTable"
+                                       style="left: 250px"> 
+                            <p:fileDownload value="#{personBean.streamContextExcel}"/>
+                        </p:commandLink>
+
+
+
+
+                        <p:spacer width="10px"></p:spacer>
+
+                        <br/>
+
+                        <br/>
+
+                        <p:outputPanel id="panel">
+                            <p:dataTable var="person"
+                                         value="#{personBean.persons}"
+                                         style="width: 1050px"
+                                         emptyMessage="No available contacs"
+                                         paginator="true"
+                                         rows="10"
+                                         paginatorPosition="botton"
+                                         paginatorTemplate="{CurrentPageReport}
+                                         {FirstPageLink}
+                                         {PreviousPageLink}
+                                         {PageLinks}
+                                         {NextPageLink}
+                                         {LastPageLink}
+                                         {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15"
+                                         id="contactsTable">
+                                <p:column headerText="Person ID">
+                                    <h:outputText value="#{person.id}"/>
+                                </p:column>
+
+                                <p:column headerText="First name">
+                                    <h:outputText value="#{person.firstName}"/>
+                                </p:column>
+
+                                <p:column headerText="Last name">
+                                    <h:outputText value="#{person.lastName}"/>
+                                </p:column>
+
+                                <p:column headerText="Email" style="width: 200px;">
+                                    <h:outputText value="#{person.email}"/>
+                                </p:column>
+
+                                <p:column headerText="Birth date" style="width: 200px;">
+                                    <h:outputText value="#{person.birthDate}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column headerText="Status">
+                                    <h:outputText value="ENABLED" value="#{person.birthDate}"/>
+                                    <h:outputText value="DISABLED"value="#{person.firstName}"/>
+                                </p:column>
+                                <p:column headerText="Actions" style="width: 180px;">
+                                    <p:commandLink value="#{msgs['general.edit']}"
+                                                   action="contactsManager"
+                                                   actionListener="#{personBean.findPerson(person.id)}"/>
+                                    <p:spacer width="10px"/>
+                                    <p:commandLink value="#{msgs['general.delete']}"
+                                                   actionListener="#{personBean.deleteContact(person.id)}"
+                                                   update=":frmContacts:panel">
+                                        <p:confirm header="Confirmation"
+                                                   message="Sure you want to proceed?"
+                                                   icon="ui-icon-alert"/>
+                                    </p:commandLink>
+                                    <p:spacer width="10px"/>
+                                    <p:commandLink value="View"
+                                                   actionListener="#{personBean.setPerson(person)}"
+                                                   oncomplete="PF('dialogDetailsP').show()">
+                                    </p:commandLink>
+                                </p:column>
+                                </datatable>
+                            </p:datatable>
+                        </p:outputPanel>
+                        <p:confirmDialog global="true"
+                                         closable="false"
+                                         closeOnEscape="false">
+                            <p:commandButton value="yes"
+                                             type="button"
+                                             styleClass="ui-confirmdialog-yes"
+                                             icon="ui-icon-check"/>
+                            <p:commandButton value="No"
+                                             type="button"
+                                             styleClass="ui-confirmdialog-no"
+                                             icon="ui-icon-close"/>
+                        </p:confirmDialog>
+                        <p:dialog header="Details"
+                                  widgetVar="dialogDetailsP"
+                                  resizable="false"
+                                  modal="true"
+                                  showEffect="drop"
+                                  hideEffect="drop"
+                                  dynamic="true"
+                                  draggable="false"
+                                  closable="false"
+
+                                  <h:panelGrid id="panelDetailsP" columns="2">
+                                <h3> Person #{personBean.person.firstName}</h3>
+                            </h:panelGrid>
+
+                            <p:dataTable var="persond"
+                                         value="#{personBean.getPersonDetails()}"
+                                         style="width: 500px"
+                                         emptyMessage="No available details"
+                                         paginator="true"
+                                         rows="10"
+                                         paginatorPosition="bottom"
+                                         paginatorTemplate="{CurrentPageReport}
+                                         {FirstPageLink}
+                                         {PreviousPageLink}
+                                         {PageLinks}
+                                         {NextPageLink}
+                                         {LastPageLink}
+                                         {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15"
+                                         id="contactsTableD">
+                                <p:column headerText="Main Address" style ="width: 50%;">
+                                    <h:outputText value="#{persond.address1}"/>
+                                </p:column>
+
+                                <p:column headerText="Minor Address" style="width: 50%;">
+                                    <h:outputText value="#{persond.address2}"/>
+                                </p:column>
+                            </p:dataTable>
+
+                            <br/>
+                            <p:commandButton value="Close" oncomplete="PF('dialogDetailsP').hide()"/>
+                        </p:dialog>
+                        <p:dialog header="View"
+                                  widgetVar="dialogDetails"
+                                  resizable="false"
+                                  modal="true"
+                                  showEffect="drop"
+                                  hideEffect="drop"
+                                  dynamic="true"
+                                  draggable="false"
+                                  closable="false">
+
+                            <h:panelGrid id="panelDetail" columns="2">
+
+                                <p:outputLabel value="First name"/>
+                                <h:outputText value="#{personBean.person.firstName}"/>
+
+                                <p:outputLabel value="Last name"/>
+                                <h:outputText value="#{personBean.person.lastName}"/>
+
+                                <p:outputLabel value="Email"/>
+                                <h:outputText value="#{personBean.person.email}"/>
+
+                                <p:outputLabel value="Birth date"/>
+                                <h:outputText value="#{personBean.person.birthDate}"/>
+                            </h:panelGrid>
+
+                            <p:commandButton value="Close" oncomplete="PF('dialogDetails').hide()"/>
+                        </p:dialog>
+                    </h:form>
+            </ui:define>
+            <ui:define name="bottom"/>
+        </ui:composition>
+    </h:body>
+</html>
