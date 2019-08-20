@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="model.Person" table="person">
+        <id column="person_id" name="id">
+            <generator class="uuid"/>
+        </id>
+        <property column="first_name" name="firstName"/>
+        <property column="last_name" name="lastName"/>
+        <property column="birth_date" name="birthDate"/>
+        <property name="email"/>
+        <many-to-one cascade="save-update" class="model.Status" column="status_id" name="status"/>
+        <many-to-one cascade="save-update" class="model.PersonDetail" column="person_detail_id" name="personDetail"/>
+    </class>
+</hibernate-mapping>

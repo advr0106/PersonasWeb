@@ -31,8 +31,8 @@ public class PersonBean {
     private ExportReport exportReport;
 
     public String init() {
-        exportReport = ExportReport.getIntance();
-        personDAO = PersonDAOHibernate.getIntance();
+        exportReport = ExportReport.getInstance();
+        personDAO = PersonDAOHibernate.getInstance();
         this.newPerson();
         this.refillList();
         return null;
@@ -46,14 +46,14 @@ public class PersonBean {
         return "/faces/webapp/viewContacts.xhtml?faces-redirect=true";
     }
     public void deleteContacts(String userId){
-        personDAO.deleteContact(personDAO.findByID(userId));
+        personDAO.deleteContact(personDAO.findById(userId));
         this.refillList();
     }
     public void newPerson(){
         person=new Person();
     }
     private void refillList(){
-        persons=(ArrayList<Person>) personDAO.findALL();
+        persons=(ArrayList<Person>) personDAO.findAll();
     }
     private void findPerson(String userId){
         this.setPerson(personDAO.findById(userId));
